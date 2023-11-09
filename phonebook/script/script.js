@@ -163,12 +163,12 @@ const data = [
     return footer;
   };
 
-  const createFooterTitle = () => {
-    const footerTitle = document.createElement('h2');
-    footerTitle.classList.add('logo');
-    footerTitle.textContent = `Все права защищены. @Павел`;
+  const createFooterText = () => {
+    const footerText = document.createElement('p');
+    footerText.classList.add('logo');
+    footerText.textContent = `Все права защищены. @Павел`;
 
-    return footerTitle;
+    return footerText;
   };
 
   const renderPhoneBook = (app, title) => {
@@ -190,11 +190,11 @@ const data = [
     const table = createTable();
     const form = createForm();
     const footer = createFooter();
-    const footerTitle = createFooterTitle();
+    const footerText = createFooterText();
 
     header.headerContainer.append(logo);
     main.mainContainer.append(buttonGroup.btnWrapper, table, form.overlay);
-    footer.footerContainer.append(footerTitle);
+    footer.footerContainer.append(footerText);
     app.append(header, main, footer);
 
     return {
