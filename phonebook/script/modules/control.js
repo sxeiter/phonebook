@@ -13,8 +13,6 @@ const hoverRow = (allRow, logo) => {
   });
 };
 
-
-
 const modalControl = (btnAdd, formOverlay) => {
   const openModal = () => {
     formOverlay.classList.add('is-visible');
@@ -54,7 +52,7 @@ const deleteControl = (btnDel, list) => {
     const target = e.target;
     if (target.closest('.del-icon')) {
       target.closest('.contact').remove();
-      
+
       const delPhone = target.closest('.contact')
           .children[3].innerText;
       serviceStorage.removeStorage(delPhone);

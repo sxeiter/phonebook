@@ -35,8 +35,8 @@ const createButtonsGroup = paramsArray => {
     return button;
   });
   btnWrapper.append(...buttons);
-  
-   return {
+
+  return {
     btnWrapper,
     buttons,
   };
@@ -104,7 +104,7 @@ const createFooter = () => {
   const footer = document.createElement('footer');
   footer.classList.add('footer');
   const footerContainer = createContainer();
-  footerContainer.textContent = `разработчик: Дэнис ©`;
+  footerContainer.textContent = `Все права защищены © Павел`;
   footer.append(footerContainer);
 
   footer.footerContainer = footerContainer;
@@ -127,7 +127,6 @@ export const createRow = ({name: firstName, surname, phone}) => {
   tdSurname.textContent = surname;
   const tdPhone = document.createElement('td');
   const phoneLink = document.createElement('a');
-
 
 
   phoneLink.href = `tel:${phone} `;

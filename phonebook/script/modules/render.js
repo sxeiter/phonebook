@@ -53,6 +53,6 @@ export const renderContacts = (elem, data) => {
     elem.append(...allRow);
     return allRow;
   } catch {
-    console.log('no data saved to render');
+    console.log('Данные не сохранены');
   }
 };
