@@ -1,6 +1,4 @@
-const phonebook = 'phonebook';
-
-const getStorage = (key) => {
+export const getStorage = key => {
   const data = localStorage.getItem(key);
   if (data) {
     return JSON.parse(data);
@@ -8,22 +6,17 @@ const getStorage = (key) => {
     return [];
   }
 };
-const setStorage = (key, object) => {
+
+export const setStorage = (key, obj) => {
   const data = getStorage(key);
-  data.push(object);
+  data.push(obj);
   localStorage.setItem(key, JSON.stringify(data));
 };
-const dataStorage = JSON.parse(localStorage.getItem(phonebook));
-const removeStorage = (key, phoneNumber) => {
-  const data = getStorage(key);
-  const dataFiltered = data.filter((item) => item.phone !== phoneNumber);
-  localStorage.setItem(key, JSON.stringify(dataFiltered));
-};
 
-export default {
-  phonebook,
-  dataStorage,
-  getStorage,
-  setStorage,
-  removeStorage,
+export const removeStorage = (phone) => {
+  let data = getStorage('contacts');
+  data = data.filter((item) => item.phone !== phone);
+
+  localStorage.removeItem('contacts');
+  localStorage.setItem('contacts', JSON.stringify(data));
 };

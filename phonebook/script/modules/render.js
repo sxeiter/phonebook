@@ -1,59 +1,58 @@
-import * as create from './createElements.js';
+import createElements from './createElements.js';
+const {
+  createHeader,
+  createLogo,
+  createMain,
+  createButtonsGroup,
+  createTable,
+  createForm,
+  createFooter,
+  createRow,
+} = createElements;
 
 export const renderPhoneBook = (app, title) => {
-  const header = create.createHeader();
-  const logo = create.createLogo(title);
-  const main = create.createMain();
-  const buttonGroup = create.createButtonsGroup([{
-    className: 'btn btn-primary mr-3 js-add',
-    type: 'button',
-    text: 'Добавить',
-  },
-  {
-    className: 'btn btn-danger',
-    type: 'button',
-    text: 'Удалить',
-  },
+  const header = createHeader();
+  const logo = createLogo(title);
+  const main = createMain();
+  const buttonGroup = createButtonsGroup([
+    {
+      className: 'btn btn-primary mr-3 js-add',
+      type: 'button',
+      text: 'Добавить',
+    },
+    {
+      className: 'btn btn-danger',
+      type: 'button',
+      text: 'Удалить',
+    },
   ]);
+  const table = createTable();
+  const {overlay, form} = createForm();
+  const btnClose = form.querySelector('.close');
 
-
-  const table = create.createTable();
-  const {form, overlay} = create.createForm();
-  const footer = create.createFooter();
-  const h2 = create.createH2();
-  footer.footerContainer.append(h2);
   header.headerContainer.append(logo);
   main.mainContainer.append(buttonGroup.btnWrapper, table, overlay);
-  app.append(header, main, footer);
 
+  const footer = createFooter();
+
+  app.append(header, main, footer);
   return {
     list: table.tbody,
     logo,
-    btnAdd: buttonGroup.btns[0],
-    btnDel: buttonGroup.btns[1],
+    btnAdd: buttonGroup.buttons[0],
+    btnDel: buttonGroup.buttons[1],
     formOverlay: overlay,
     form,
+    btnClose,
+    thead: table.firstChild,
   };
 };
-
 export const renderContacts = (elem, data) => {
-  // Добавил
-  elem.replaceChildren();
-  const allRow = data ? data.map(create.createRow) : [];
-  elem.append(...allRow);
-  return allRow;
-};
-
-export const hoverRow = (allRow, logo) => {
-  const text = logo.textContent;
-  allRow.forEach(contact => {
-    contact.addEventListener('mouseenter', () => {
-      logo.textContent = contact.phoneLink.textContent;
-    });
-  });
-  allRow.forEach(contact => {
-    contact.addEventListener('mouseleave', () => {
-      logo.textContent = text;
-    });
-  });
+  try {
+    const allRow = data?.map(createRow);
+    elem.append(...allRow);
+    return allRow;
+  } catch {
+    console.log('no data saved to render');
+  }
 };

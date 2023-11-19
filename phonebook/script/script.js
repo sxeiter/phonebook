@@ -1,59 +1,47 @@
-import stor from './modules/serviceStorage.js';
-import {
-  renderPhoneBook,
-  renderContacts,
+import controls from './modules/control.js';
+const {
   hoverRow,
-} from './modules/render.js';
-import control from './modules/control.js';
+  sort,
+  modalControl,
+  deleteControl,
+  formControl,
+} = controls;
+import {renderPhoneBook, renderContacts} from './modules/render.js';
+import {getStorage} from './modules/serviceStorage.js';
 
 {
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
+    const {
+      list,
+      logo,
+      btnAdd,
+      formOverlay,
+      form,
+      btnDel,
+      thead,
+    } = renderPhoneBook(app, title);
 
-    const {list, logo, btnAdd, formOverlay, btnDel, form} =
-    renderPhoneBook(app, title);
+    // Функционал
+    const allRow = renderContacts(list, getStorage('contacts'));
+    const {closeModal} = modalControl(btnAdd, formOverlay);
 
-    // Реализация сортировки
-    const sortName = document.querySelector('.nameTr');
-    const sortSurname = document.querySelector('.surnameTr');
-
-    sortName.addEventListener('click', () => {
-      const sortData = [...stor.dataStorage];
-      stor.dataStorage.sort((a, b) => {
-        console.log(a, b);
-        if (a.name > b.name) {
-          return 1;
-        }
-        if (a.name < b.name) {
-          return -1;
-        }
-        return 0;
-      });
-      localStorage.setItem(stor.phonebook, JSON.stringify(sortData));
-      renderContacts(list, sortData);
-    });
-
-    sortSurname.addEventListener('click', () => {
-      stor.dataStorage.sort((a, b) => {
-        console.log(a, b);
-        if (a.surname > b.surname) {
-          return 1;
-        }
-        if (a.surname < b.surname) {
-          return -1;
-        }
-        return 0;
-      });
-      localStorage.setItem(stor.phonebook,
-          JSON.stringify(stor.dataStorage));
-      renderContacts(list, stor.dataStorage);
-    });
-
-    const allRow = renderContacts(list, stor.dataStorage);
-    const {closeModal} = control.modalControl(btnAdd, formOverlay);
     hoverRow(allRow, logo);
-    control.deleteControl(btnDel, list);
-    control.formControl(form, list, closeModal);
+    deleteControl(btnDel, list);
+    formControl(form, list, closeModal);
+
+    thead.addEventListener('click', e => {
+      const target = e.target;
+      if (target.textContent === 'Имя') {
+        sort('name');
+        list.innerHTML = '';
+        renderContacts(list, getStorage('contacts'));
+      } else if (target.textContent === 'Фамилия') {
+        sort('surname');
+        list.innerHTML = '';
+        renderContacts(list, getStorage('contacts'));
+      }
+    });
   };
   window.phoneBookInit = init;
 }
