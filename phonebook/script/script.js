@@ -1,7 +1,6 @@
 import controls from './modules/control.js';
 const {
   hoverRow,
-  sort,
   modalControl,
   deleteControl,
   formControl,
@@ -33,11 +32,9 @@ import {getStorage} from './modules/serviceStorage.js';
     thead.addEventListener('click', e => {
       const target = e.target;
       if (target.textContent === 'Имя') {
-        sort('name');
         list.innerHTML = '';
         renderContacts(list, getStorage('contacts'));
       } else if (target.textContent === 'Фамилия') {
-        sort('surname');
         list.innerHTML = '';
         renderContacts(list, getStorage('contacts'));
       }
