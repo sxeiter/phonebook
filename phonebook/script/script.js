@@ -18,7 +18,7 @@ import {getStorage} from './modules/serviceStorage.js';
       formOverlay,
       form,
       btnDel,
-      thead,
+
     } = renderPhoneBook(app, title);
 
     // Функционал
@@ -28,17 +28,6 @@ import {getStorage} from './modules/serviceStorage.js';
     hoverRow(allRow, logo);
     deleteControl(btnDel, list);
     formControl(form, list, closeModal);
-
-    thead.addEventListener('click', e => {
-      const target = e.target;
-      if (target.textContent === 'Имя') {
-        list.innerHTML = '';
-        renderContacts(list, getStorage('contacts'));
-      } else if (target.textContent === 'Фамилия') {
-        list.innerHTML = '';
-        renderContacts(list, getStorage('contacts'));
-      }
-    });
   };
   window.phoneBookInit = init;
 }
